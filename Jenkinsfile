@@ -1,31 +1,5 @@
 pipeline {
-    agent {
-        kubernetes {
-            yaml '''
-                apiVersion: v1
-                kind: Pod
-                spec:
-                  containers:
-                  - name: maven
-                    image: maven:3.8.4-openjdk-17
-                    command:
-                    - cat
-                    tty: true
-                    volumeMounts:
-                    - name: maven-cache
-                      mountPath: /root/.m2
-                  - name: kaniko
-                    image: gcr.io/kaniko-project/executor:debug
-                    command:
-                    - /busybox/cat
-                    tty: true
-                  volumes:
-                  - name: maven-cache
-                    persistentVolumeClaim:
-                        claimName: efs-pvc
-            '''
-        }
-    }
+    agent { label "maven"}
 
     environment {
         DOCKER_HUB_REPO = "techiescamp/jenkins-java-app"
@@ -46,7 +20,7 @@ pipeline {
                 }
             }
         }
-
+        /*
         stage('Build and Push Docker Image') {
             steps {
                 container('kaniko') {
@@ -61,5 +35,6 @@ pipeline {
                 }
             }
         }
+        */
     }
 }
