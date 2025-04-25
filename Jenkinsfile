@@ -30,7 +30,7 @@ pipeline {
                     docker --version;
                     pwd;
                     ls -ltr;
-                    docker build . -t my-first-maven-app
+                    docker build . -t $DOCKER_HUB_REPO:$IMAGE_TAG
                 '''
             }
         }
