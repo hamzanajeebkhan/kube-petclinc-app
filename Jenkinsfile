@@ -34,6 +34,13 @@ pipeline {
                 '''
             }
         }
+
+        stage('Downstream CD pipeline') {
+            steps {
+                build job: 'MyPetclinic_CD', parameters: [string(name: 'IMAGE_NAME', value: 'techiescamp/jenkins-java-app:2.0.0'), string(name: 'CONTAINER_NAME', value: 'petclinic')]
+            }
+        }
+        
         
     }
 }
